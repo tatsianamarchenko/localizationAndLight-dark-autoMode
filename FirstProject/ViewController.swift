@@ -14,7 +14,6 @@ class ViewController: UIViewController {
   var greeting : UILabel = {
     var text = UILabel()
     text.font = .boldSystemFont(ofSize: 20)
-    text.translatesAutoresizingMaskIntoConstraints = false
     text.textAlignment = .center
     text.numberOfLines = 0
     text.text = "Выберите язык приветствия"
@@ -28,50 +27,76 @@ class ViewController: UIViewController {
     image.tintColor = UIColor(named: "Color")
     return image
   }()
-  
+
+  var accessButton : UIButton = {
+    var button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setBackgroundImage(UIImage(systemName: "lock"), for: .normal)
+    button.tintColor = UIColor(named: "Color")
+    button.addTarget(self, action: #selector(accessChangeLanguage), for: .touchUpInside)
+    return button
+  }()
+
   var lenguagePicker : UIPickerView = {
     var picker = UIPickerView()
+    picker.isUserInteractionEnabled = false
     picker.translatesAutoresizingMaskIntoConstraints = false
     return picker
   }()
 
   var lightAppearanceButton : UIButton = {
     var button = UIButton(type: .roundedRect)
-    button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("light", for: .normal)
+    button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     button.setTitleColor(UIColor(named: "Color"), for: .normal)
     button.setTitleColor(.systemMint, for: .highlighted)
+    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     button.addTarget(self, action: #selector(lightMode), for: .touchUpInside)
     return button
   }()
+
+  var darkAppearanceButton : UIButton = {
+    var button = UIButton(type: .roundedRect)
+    button.setTitle("dark", for: .normal)
+    button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+    button.setTitleColor(UIColor(named: "Color"), for: .normal)
+    button.setTitleColor(.systemMint, for: .highlighted)
+    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    button.addTarget(self, action: #selector(darkMode), for: .touchUpInside)
+    return button
+  }()
+
+  var unspecifiedAppearanceButton : UIButton = {
+    var button = UIButton(type: .roundedRect)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("default", for: .normal)
+    button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+    button.setTitleColor(UIColor(named: "Color"), for: .normal)
+    button.setTitleColor(.systemMint, for: .highlighted)
+    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    button.addTarget(self, action: #selector(unspecifiedMode), for: .touchUpInside)
+    return button
+  }()
+
+  @objc func accessChangeLanguage () {
+    if  !lenguagePicker.isUserInteractionEnabled {
+      lenguagePicker.isUserInteractionEnabled = true
+      accessButton.setBackgroundImage(UIImage(systemName: "lock.open"), for: .normal)
+    }
+    else {
+      lenguagePicker.isUserInteractionEnabled = false
+      greeting.text = "Выберите язык приветствия"
+      accessButton.setBackgroundImage(UIImage(systemName: "lock"), for: .normal)
+    }
+  }
 
   @objc func lightMode () {
     overrideUserInterfaceStyle = .light
   }
 
-  var darkAppearanceButton : UIButton = {
-    var button = UIButton(type: .roundedRect)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("dark", for: .normal)
-    button.setTitleColor(UIColor(named: "Color"), for: .normal)
-    button.setTitleColor(.systemMint, for: .highlighted)
-    button.addTarget(self, action: #selector(darkMode), for: .touchUpInside)
-    return button
-  }()
-
   @objc func darkMode () {
     overrideUserInterfaceStyle = .dark
   }
-
-  var unspecifiedAppearanceButton : UIButton = {
-    var button = UIButton(type: .roundedRect)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("unspecified", for: .normal)
-    button.setTitleColor(UIColor(named: "Color"), for: .normal)
-    button.setTitleColor(.systemMint, for: .highlighted)
-    button.addTarget(self, action: #selector(unspecifiedMode), for: .touchUpInside)
-    return button
-  }()
 
   @objc func unspecifiedMode () {
     overrideUserInterfaceStyle = .unspecified
@@ -79,21 +104,28 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.backgroundColor = .systemBackground
 
     lenguagePicker.dataSource = self
     lenguagePicker.delegate = self
-    
+
     view.addSubview(greeting)
     view.addSubview(image)
+    view.addSubview(accessButton)
     view.addSubview(lenguagePicker)
     view.addSubview(lightAppearanceButton)
     view.addSubview(darkAppearanceButton)
     view.addSubview(unspecifiedAppearanceButton)
 
+    elementsConfig(view: greeting)
+    elementsConfig(view: lightAppearanceButton)
+    elementsConfig(view: darkAppearanceButton)
+    elementsConfig(view: unspecifiedAppearanceButton)
+
     createGreetingConstraint()
     createImageConstraint()
+    createAccessButtonConstraint()
     createLenguagePickereConstraint()
     createButtonsConstraint()
   }
@@ -104,11 +136,16 @@ class ViewController: UIViewController {
     greeting.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
   }
 
+  func createAccessButtonConstraint () {
+    accessButton.topAnchor.constraint(equalTo: greeting.bottomAnchor, constant: 10).isActive = true
+    accessButton.widthAnchor.constraint(equalTo: image.widthAnchor, constant: 10).isActive = true
+    accessButton.heightAnchor.constraint(equalTo: image.heightAnchor, constant: 10).isActive = true
+    accessButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+  }
+
   func createImageConstraint () {
-    image.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -200).isActive = true
-    image.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -530).isActive = true
     image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    image.topAnchor.constraint(equalTo: greeting.bottomAnchor, constant: 10).isActive = true
+    image.topAnchor.constraint(equalTo: accessButton.bottomAnchor, constant: 10).isActive = true
   }
 
   func createLenguagePickereConstraint () {
@@ -123,6 +160,13 @@ class ViewController: UIViewController {
     darkAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     unspecifiedAppearanceButton.topAnchor.constraint(equalTo: darkAppearanceButton.bottomAnchor, constant: 10).isActive = true
     unspecifiedAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+  }
+
+  func elementsConfig (view: UIView) {
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .systemGray6
+    view.layer.masksToBounds = true
+    view.layer.cornerRadius = 10
   }
 }
 
