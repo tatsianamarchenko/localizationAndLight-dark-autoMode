@@ -14,6 +14,7 @@ class ViewController: UIViewController {
   var greeting : UILabel = {
     var text = UILabel()
     text.font = .boldSystemFont(ofSize: 20)
+    text.translatesAutoresizingMaskIntoConstraints = false
     text.textAlignment = .center
     text.numberOfLines = 0
     text.text = "Выберите язык приветствия"
@@ -23,12 +24,14 @@ class ViewController: UIViewController {
   var image : UIImageView = {
     var image = UIImageView()
     image.image = UIImage(named: "baseline_pets")
+    image.translatesAutoresizingMaskIntoConstraints = false
     image.tintColor = UIColor(named: "Color")
     return image
   }()
   
   var lenguagePicker : UIPickerView = {
     var picker = UIPickerView()
+    picker.translatesAutoresizingMaskIntoConstraints = false
     return picker
   }()
 
@@ -78,14 +81,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     
     view.backgroundColor = .systemBackground
-    //
-    greeting.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
-    image.frame = CGRect(x: 100, y: 300, width: 300, height: 300)
-    lenguagePicker.frame = CGRect(x: 10, y: 200, width: 100, height: 100)
-    lightAppearanceButton.frame = CGRect(x: 30, y: 400, width: 50, height: 50)
-    darkAppearanceButton.frame = CGRect(x: lightAppearanceButton.center.x + 30, y: 400, width: 50, height: 50)
-    unspecifiedAppearanceButton.frame = CGRect(x: darkAppearanceButton.center.x + 30, y: 400, width: 50, height: 50)
-    //
+
     lenguagePicker.dataSource = self
     lenguagePicker.delegate = self
     
@@ -95,6 +91,38 @@ class ViewController: UIViewController {
     view.addSubview(lightAppearanceButton)
     view.addSubview(darkAppearanceButton)
     view.addSubview(unspecifiedAppearanceButton)
+
+    createGreetingConstraint()
+    createImageConstraint()
+    createLenguagePickereConstraint()
+    createButtonsConstraint()
+  }
+
+  func createGreetingConstraint () {
+    greeting.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
+    greeting.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    greeting.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+  }
+
+  func createImageConstraint () {
+    image.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -200).isActive = true
+    image.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -530).isActive = true
+    image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    image.topAnchor.constraint(equalTo: greeting.bottomAnchor, constant: 10).isActive = true
+  }
+
+  func createLenguagePickereConstraint () {
+    lenguagePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    lenguagePicker.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 10).isActive = true
+  }
+
+  func createButtonsConstraint () {
+    lightAppearanceButton.topAnchor.constraint(equalTo: lenguagePicker.bottomAnchor, constant: 10).isActive = true
+    lightAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    darkAppearanceButton.topAnchor.constraint(equalTo: lightAppearanceButton.bottomAnchor, constant: 10).isActive = true
+    darkAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    unspecifiedAppearanceButton.topAnchor.constraint(equalTo: darkAppearanceButton.bottomAnchor, constant: 10).isActive = true
+    unspecifiedAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
   }
 }
 
