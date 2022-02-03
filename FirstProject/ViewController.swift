@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     text.font = .boldSystemFont(ofSize: 20)
     text.textAlignment = .center
     text.numberOfLines = 0
-    text.text = "Выберите язык приветствия"
+    text.text = "Выберите язык приветствия, для этого нажмите на кнопку : 🔒"
     return text
   }()
 
@@ -40,6 +40,7 @@ class ViewController: UIViewController {
   var lenguagePicker : UIPickerView = {
     var picker = UIPickerView()
     picker.isUserInteractionEnabled = false
+      picker.isHidden = true
     picker.translatesAutoresizingMaskIntoConstraints = false
     return picker
   }()
@@ -81,10 +82,12 @@ class ViewController: UIViewController {
   @objc func accessChangeLanguage () {
     if  !lenguagePicker.isUserInteractionEnabled {
       lenguagePicker.isUserInteractionEnabled = true
+      lenguagePicker.isHidden = false
       accessButton.setBackgroundImage(UIImage(systemName: "lock.open"), for: .normal)
     }
     else {
       lenguagePicker.isUserInteractionEnabled = false
+      lenguagePicker.isHidden = true
       greeting.text = "Выберите язык приветствия"
       accessButton.setBackgroundImage(UIImage(systemName: "lock"), for: .normal)
     }
@@ -133,33 +136,37 @@ class ViewController: UIViewController {
   func createGreetingConstraint () {
     greeting.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
     greeting.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    greeting.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+    greeting.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
   }
 
   func createAccessButtonConstraint () {
-    accessButton.topAnchor.constraint(equalTo: greeting.bottomAnchor, constant: 10).isActive = true
-    accessButton.widthAnchor.constraint(equalTo: image.widthAnchor, constant: 10).isActive = true
-    accessButton.heightAnchor.constraint(equalTo: image.heightAnchor, constant: 10).isActive = true
+    accessButton.topAnchor.constraint(equalTo: greeting.bottomAnchor, constant: 3).isActive = true
+    accessButton.widthAnchor.constraint(equalTo: image.widthAnchor).isActive = true
+    accessButton.heightAnchor.constraint(equalTo: image.heightAnchor).isActive = true
     accessButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
   }
 
   func createImageConstraint () {
     image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    image.topAnchor.constraint(equalTo: accessButton.bottomAnchor, constant: 10).isActive = true
+    image.widthAnchor.constraint(equalTo: image.heightAnchor, constant: 3).isActive = true
+    image.topAnchor.constraint(equalTo: accessButton.bottomAnchor, constant: 3).isActive = true
+    image.bottomAnchor.constraint(equalTo: lenguagePicker.topAnchor, constant: 3).isActive = true
   }
 
   func createLenguagePickereConstraint () {
     lenguagePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    lenguagePicker.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 10).isActive = true
+    lenguagePicker.bottomAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
   }
 
   func createButtonsConstraint () {
-    lightAppearanceButton.topAnchor.constraint(equalTo: lenguagePicker.bottomAnchor, constant: 10).isActive = true
-    lightAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    darkAppearanceButton.topAnchor.constraint(equalTo: lightAppearanceButton.bottomAnchor, constant: 10).isActive = true
+    lightAppearanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+    lightAppearanceButton.trailingAnchor.constraint(equalTo: darkAppearanceButton.leadingAnchor, constant: -30).isActive = true
+    darkAppearanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     darkAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    unspecifiedAppearanceButton.topAnchor.constraint(equalTo: darkAppearanceButton.bottomAnchor, constant: 10).isActive = true
-    unspecifiedAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    darkAppearanceButton.topAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
+    unspecifiedAppearanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+    unspecifiedAppearanceButton.topAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
+    unspecifiedAppearanceButton.leadingAnchor.constraint(equalTo: darkAppearanceButton.trailingAnchor, constant: 30).isActive = true
   }
 
   func elementsConfig (view: UIView) {
@@ -169,7 +176,6 @@ class ViewController: UIViewController {
     view.layer.cornerRadius = 10
   }
 }
-
 
 extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -186,7 +192,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     switch row {
-    case 0 :   greeting.text = "Hello, Good morning, Good afternoon, Good evening, It is nice to meet you, It is a pleasure to meet you"
+    case 0 :   greeting.text = "Hello, Good morning, Good afternoon, Good evening, It is nice to meet you"
     case 1 :   greeting.text = "Прывет, Добрай раніцы, Добры дзень, Добрага вечара, Добрай ночы!"
     case 2 :   greeting.text = "Здравствуйте, Приветствую, Добрый день, Доброе утро, Добрый вечер"
     default:
