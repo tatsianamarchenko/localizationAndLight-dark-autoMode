@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  FirstProject
+
+  Created by Tatsiana Marchanka on 3.02.22.
+  
+*/
+"initialMessage" = "Click on the button : 🔒 to select the language of the greeting";
+"lightButton" = "light";
+"darkButton" = "dark";
+"unspecifiedButton" = "auto";
+"greetingPhrase" = "Hello, Good morning, Good afternoon, Good evening, It is nice to meet you";

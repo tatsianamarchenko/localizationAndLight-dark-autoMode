@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF394E8B27AC2B9200029522 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF394E8D27AC2B9200029522 /* Localizable.strings */; };
 		BF9F2CDF27AAAB3700E0635F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F2CDE27AAAB3700E0635F /* AppDelegate.swift */; };
 		BF9F2CE127AAAB3700E0635F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F2CE027AAAB3700E0635F /* SceneDelegate.swift */; };
 		BF9F2CE327AAAB3700E0635F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9F2CE227AAAB3700E0635F /* ViewController.swift */; };
 		BF9F2CE827AAAB3900E0635F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9F2CE727AAAB3900E0635F /* Assets.xcassets */; };
-		BF9F2CEB27AAAB3900E0635F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF9F2CE927AAAB3900E0635F /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF2230E527ABFBCC00FB1A64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		BF2230E627ABFC9200FB1A64 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BF394E8F27AC2B9500029522 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BF394E9627AC2D2500029522 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BF394E9727AC2D2600029522 /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BF9F2CDB27AAAB3700E0635F /* FirstProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF9F2CDE27AAAB3700E0635F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF9F2CE027AAAB3700E0635F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,8 +59,8 @@
 				BF9F2CDE27AAAB3700E0635F /* AppDelegate.swift */,
 				BF9F2CE027AAAB3700E0635F /* SceneDelegate.swift */,
 				BF9F2CE227AAAB3700E0635F /* ViewController.swift */,
+				BF394E8D27AC2B9200029522 /* Localizable.strings */,
 				BF9F2CE727AAAB3900E0635F /* Assets.xcassets */,
-				BF9F2CE927AAAB3900E0635F /* LaunchScreen.storyboard */,
 				BF9F2CEC27AAAB3900E0635F /* Info.plist */,
 			);
 			path = FirstProject;
@@ -117,6 +118,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"be-BY",
+				ru,
 			);
 			mainGroup = BF9F2CD227AAAB3700E0635F;
 			productRefGroup = BF9F2CDC27AAAB3700E0635F /* Products */;
@@ -133,8 +136,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF9F2CEB27AAAB3900E0635F /* LaunchScreen.storyboard in Resources */,
 				BF9F2CE827AAAB3900E0635F /* Assets.xcassets in Resources */,
+				BF394E8B27AC2B9200029522 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,13 +157,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		BF9F2CE927AAAB3900E0635F /* LaunchScreen.storyboard */ = {
+		BF394E8D27AC2B9200029522 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BF2230E527ABFBCC00FB1A64 /* en */,
-				BF2230E627ABFC9200FB1A64 /* en */,
+				BF394E8F27AC2B9500029522 /* ru */,
+				BF394E9627AC2D2500029522 /* en */,
+				BF394E9727AC2D2600029522 /* be-BY */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
