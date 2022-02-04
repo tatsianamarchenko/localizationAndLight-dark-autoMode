@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
   var languagesArray = ["English", "Беларуская", "Русский"]
+  var languageIndex = 0
 
   var greeting : UILabel = {
     var text = UILabel()
@@ -28,7 +29,7 @@ class ViewController: UIViewController {
     return image
   }()
 
-  var lenguagePicker : UIPickerView = {
+  var languagePicker : UIPickerView = {
     var picker = UIPickerView()
     picker.isUserInteractionEnabled = false
     picker.isHidden = true
@@ -42,7 +43,6 @@ class ViewController: UIViewController {
     button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     button.setTitleColor(UIColor(named: "Color"), for: .normal)
     button.setTitleColor(.systemMint, for: .highlighted)
-    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     button.addTarget(self, action: #selector(lightMode), for: .touchUpInside)
     return button
   }()
@@ -53,7 +53,6 @@ class ViewController: UIViewController {
     button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     button.setTitleColor(UIColor(named: "Color"), for: .normal)
     button.setTitleColor(.systemMint, for: .highlighted)
-    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     button.addTarget(self, action: #selector(darkMode), for: .touchUpInside)
     return button
   }()
@@ -65,20 +64,20 @@ class ViewController: UIViewController {
     button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     button.setTitleColor(UIColor(named: "Color"), for: .normal)
     button.setTitleColor(.systemMint, for: .highlighted)
-    button.widthAnchor.constraint(equalToConstant: 80).isActive = true
     button.addTarget(self, action: #selector(unspecifiedMode), for: .touchUpInside)
     return button
   }()
 
   @objc func accessChangeLanguage () {
-    if  !lenguagePicker.isUserInteractionEnabled {
-      lenguagePicker.isUserInteractionEnabled = true
-      lenguagePicker.isHidden = false
+    if  !languagePicker.isUserInteractionEnabled {
+      languagePicker.isUserInteractionEnabled = true
+      languagePicker.isHidden = false
       image.image = UIImage(named: "baseline_lock_open")
+      choosedLanguage(row: languageIndex)
     }
     else {
-      lenguagePicker.isUserInteractionEnabled = false
-      lenguagePicker.isHidden = true
+      languagePicker.isUserInteractionEnabled = false
+      languagePicker.isHidden = true
       greeting.text = "🔒/🔑"
       image.image = UIImage(named: "baseline_lock")
     }
@@ -105,12 +104,12 @@ class ViewController: UIViewController {
     image.isUserInteractionEnabled = true
     image.addGestureRecognizer(tapGestureRecognizer)
 
-    lenguagePicker.dataSource = self
-    lenguagePicker.delegate = self
+    languagePicker.dataSource = self
+    languagePicker.delegate = self
 
     view.addSubview(greeting)
     view.addSubview(image)
-    view.addSubview(lenguagePicker)
+    view.addSubview(languagePicker)
     view.addSubview(lightAppearanceButton)
     view.addSubview(darkAppearanceButton)
     view.addSubview(unspecifiedAppearanceButton)
@@ -136,23 +135,26 @@ class ViewController: UIViewController {
     image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     image.widthAnchor.constraint(equalTo: image.heightAnchor, constant: 3).isActive = true
     image.topAnchor.constraint(equalTo: greeting.bottomAnchor, constant: 3).isActive = true
-    image.bottomAnchor.constraint(equalTo: lenguagePicker.topAnchor, constant: 3).isActive = true
+    image.bottomAnchor.constraint(equalTo: languagePicker.topAnchor, constant: 3).isActive = true
   }
 
   func createLenguagePickereConstraint () {
-    lenguagePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    lenguagePicker.bottomAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
+    languagePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    languagePicker.bottomAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
   }
 
   func createButtonsConstraint () {
     lightAppearanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     lightAppearanceButton.trailingAnchor.constraint(equalTo: darkAppearanceButton.leadingAnchor, constant: -30).isActive = true
+    lightAppearanceButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
     darkAppearanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     darkAppearanceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     darkAppearanceButton.topAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
+    darkAppearanceButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
     unspecifiedAppearanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     unspecifiedAppearanceButton.topAnchor.constraint(equalTo: lightAppearanceButton.topAnchor).isActive = true
     unspecifiedAppearanceButton.leadingAnchor.constraint(equalTo: darkAppearanceButton.trailingAnchor, constant: 30).isActive = true
+    unspecifiedAppearanceButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
   }
 
   func elementsConfig (view: UIView) {
@@ -160,6 +162,27 @@ class ViewController: UIViewController {
     view.backgroundColor = .systemGray6
     view.layer.masksToBounds = true
     view.layer.cornerRadius = 10
+  }
+
+  func choosedLanguage (row: Int) {
+    switch row {
+    case 0 :
+      adaptationOfLocalization(language: "en")
+      languageIndex = 0
+    case 1 :
+      adaptationOfLocalization(language: "be-BY")
+      languageIndex = 1
+    case 2 : adaptationOfLocalization(language: "ru")
+      languageIndex = 2
+    default:
+      break
+    }
+   func adaptationOfLocalization (language: String) {
+      greeting.text = "greetingPhrase".localized(language)
+      lightAppearanceButton.setTitle("lightButton".localized(language), for: .normal)
+      darkAppearanceButton.setTitle("darkButton".localized(language), for: .normal)
+      unspecifiedAppearanceButton.setTitle("unspecifiedButton".localized(language), for: .normal)
+    }
   }
 }
 
@@ -177,27 +200,12 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    switch row {
-    case 0 :
-      adaptationOfLocalization(leng: "en")
-    case 1 :
-      adaptationOfLocalization(leng: "be-BY")
-    case 2 : adaptationOfLocalization(leng: "ru")
-    default:
-      break
-    }
-  }
-
-  func adaptationOfLocalization (leng: String) {
-    greeting.text = "greetingPhrase".localized(leng)
-    lightAppearanceButton.setTitle("lightButton".localized(leng), for: .normal)
-    darkAppearanceButton.setTitle("darkButton".localized(leng), for: .normal)
-    unspecifiedAppearanceButton.setTitle("unspecifiedButton".localized(leng), for: .normal)
+    choosedLanguage(row: row)
   }
 }
 
 extension String {
-  func localized(_ lang:String) ->String {
+  func localized(_ lang: String) -> String {
     let path = Bundle.main.path(forResource: lang, ofType: "lproj")
     let bundle = Bundle(path: path!)
     return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
