@@ -42,7 +42,9 @@ class ViewController: UIViewController {
     button.setTitle(NSLocalizedString("lightButton", comment: ""), for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     button.setTitleColor(UIColor(named: "Color"), for: .normal)
-    button.setTitleColor(.systemMint, for: .highlighted)
+    button.setTitle("", for: .highlighted )
+    button.imageView?.contentMode = .scaleAspectFit
+    button.setImage(UIImage(systemName: "lightbulb.fill")?.withTintColor(.systemMint, renderingMode: .alwaysOriginal), for: .highlighted)
     button.addTarget(self, action: #selector(lightMode), for: .touchUpInside)
     return button
   }()
@@ -52,7 +54,9 @@ class ViewController: UIViewController {
     button.setTitle(NSLocalizedString("darkButton", comment: ""), for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     button.setTitleColor(UIColor(named: "Color"), for: .normal)
-    button.setTitleColor(.systemMint, for: .highlighted)
+    button.setTitle("", for: .highlighted )
+    button.imageView?.contentMode = .scaleAspectFit
+    button.setImage(UIImage(systemName: "lightbulb.slash.fill")?.withTintColor(.systemMint, renderingMode: .alwaysOriginal), for: .highlighted)
     button.addTarget(self, action: #selector(darkMode), for: .touchUpInside)
     return button
   }()
@@ -67,33 +71,6 @@ class ViewController: UIViewController {
     button.addTarget(self, action: #selector(unspecifiedMode), for: .touchUpInside)
     return button
   }()
-
-  @objc func accessChangeLanguage () {
-    if  !languagePicker.isUserInteractionEnabled {
-      languagePicker.isUserInteractionEnabled = true
-      languagePicker.isHidden = false
-      image.image = UIImage(named: "baseline_lock_open")
-      choosedLanguage(row: languageIndex)
-    }
-    else {
-      languagePicker.isUserInteractionEnabled = false
-      languagePicker.isHidden = true
-      greeting.text = "🔒/🔑"
-      image.image = UIImage(named: "baseline_lock")
-    }
-  }
-
-  @objc func lightMode () {
-    overrideUserInterfaceStyle = .light
-  }
-
-  @objc func darkMode () {
-    overrideUserInterfaceStyle = .dark
-  }
-
-  @objc func unspecifiedMode () {
-    overrideUserInterfaceStyle = .unspecified
-  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -162,6 +139,33 @@ class ViewController: UIViewController {
     view.backgroundColor = .systemGray6
     view.layer.masksToBounds = true
     view.layer.cornerRadius = 10
+  }
+
+  @objc func accessChangeLanguage () {
+    if  !languagePicker.isUserInteractionEnabled {
+      languagePicker.isUserInteractionEnabled = true
+      languagePicker.isHidden = false
+      image.image = UIImage(named: "baseline_lock_open")
+      choosedLanguage(row: languageIndex)
+    }
+    else {
+      languagePicker.isUserInteractionEnabled = false
+      languagePicker.isHidden = true
+      greeting.text = "🔒/🔑"
+      image.image = UIImage(named: "baseline_lock")
+    }
+  }
+
+  @objc func lightMode () {
+    overrideUserInterfaceStyle = .light
+  }
+
+  @objc func darkMode () {
+    overrideUserInterfaceStyle = .dark
+  }
+
+  @objc func unspecifiedMode () {
+    overrideUserInterfaceStyle = .unspecified
   }
 
   func choosedLanguage (row: Int) {
